@@ -1,4 +1,8 @@
+import { eq } from "drizzle-orm";
+import { db } from "../configs/db";
+import { USER_TABLE } from "../configs/schema";
 import { inngest } from "./client";
+
 
 export const helloWorld = inngest.createFunction(
     { id: "hello-world" },
@@ -13,6 +17,7 @@ export const CreateNewUser = inngest.createFunction(
     { id: "create-user" },
     { event: "user.create" },
     async ({ event, step }) => {
+        const { user } = event.data
         const result = await step.run("Check User and create New if not in DB", async () => {
             const result = await db.select().from(USER_TABLE).where(eq(USER_TABLE.email, user?.primaryEmailAddress?.emailAddress))
 
@@ -25,12 +30,14 @@ export const CreateNewUser = inngest.createFunction(
                     email: user?.primaryEmailAddress?.emailAddress,
                     isMember: false
                 }).returning({ id: USER_TABLE.id })
+                return userResponse
             }
+            return result
         })
         return "Success"
     }
 
     // Step to send welcome email notification
 
-    // step to send email notification After 3 Days once user joined
+    // step to send email notification After 3 Days once user join it
 )
