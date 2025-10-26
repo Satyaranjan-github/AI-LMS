@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useState } from "react"
 
 
-function SelectOptions({ selectCourseType }) {
+function SelectOptions({ selectStudyType }) {
     const Options = [
         {
             name: "Exam",
@@ -39,8 +39,8 @@ function SelectOptions({ selectCourseType }) {
                     <div key={index} className={`p-4 mt-5 flex flex-col items-center justify-center border rounded-xl hover:border-primary cursor-pointer ${selectedOptions === option.name ? "border-primary" : ""}`}
                         onClick={() => {
                             setSelectedOptions(option.name)
-                            selectCourseType(option.name)
-                            selectCourseType(option.name)
+                            selectStudyType(option.name)
+                            selectStudyType(option.name)
                         }}
                     >
                         <Image alt={option.name} src={option.icon} width={50} height={50} />
