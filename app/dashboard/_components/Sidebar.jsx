@@ -36,11 +36,9 @@ function Sidebar() {
                 <h2 className="font-bold text-2xl">Easy Study</h2>
             </div>
             <div className="mt-10">
-                <Link href={"/create"}>
-                    <Button className="w-full">
-                        <Plus />  Create New
-                    </Button>
-                </Link>
+                <Button className="w-full">
+                    <Plus />  Create New
+                </Button>
                 <div className="mt-5 ">
                     {MenuList.map((menubar, index) => (
                         <div key={index} className={`flex gap-5 items-center p-3 hover:bg-slate-200 rounded-lg cursor-pointer mt-3 ${path == menubar.path && "bg-slate-200"}`} >
@@ -57,7 +55,7 @@ function Sidebar() {
                 </h2>
                 <Link href="/dashboard/upgrade" className="text-primary text-xs mt-3">Upgrade to create more</Link>
             </div>
-        </div >
+        </div>
     )
 }
 
