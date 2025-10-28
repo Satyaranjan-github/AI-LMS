@@ -31,7 +31,6 @@ function Provider({ children }) {
         const resp = await axios.post("/api/create-user", {
             user: user
         })
-        console.log("Data in provider=", resp.data)
     }
 
     return (
