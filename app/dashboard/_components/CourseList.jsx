@@ -10,9 +10,8 @@ function CourseList() {
     const [courseList, setCourseList] = useState([])
 
     const GetCourseList = async () => {
-        console.log("USERS EMAIL ADDRESS:-", user?.primaryEmailAddress?.emailAddress)
+
         const result = await axios.post("/api/courses", { createdBy: user?.primaryEmailAddress?.emailAddress })
-        console.log("Course List:-", result.data.result)
         setCourseList(result.data.result)
     }
 
