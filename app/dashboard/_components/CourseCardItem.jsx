@@ -20,7 +20,7 @@ const CourseCardItem = ({ course }) => {
                 </div>
                 <div className="mt-3 flex justify-end">
                     {course?.status === "Generating" ? <h2 className="text-sm p-1 px-2 rounded-full bg-gray-600 text-white gap-2 flex items-center ">
-                        <RefreshCcw className="size-4" />
+                        <RefreshCcw className="size-4 animate-spin" />
                         Generating...
                     </h2> :
                         <Button>

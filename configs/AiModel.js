@@ -4,30 +4,30 @@ const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
 const genAI = new GoogleGenerativeAI(apiKey)
 
 const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash"
+  model: "gemini-2.5-flash"
 })
 
 const generationConfig = {
-    temperature: 1,
-    topP: 0.95,
-    topK: 40,
-    maxOutputTokens: 8192,
-    responseMimeType: "application/json",
+  temperature: 1,
+  topP: 0.95,
+  topK: 40,
+  maxOutputTokens: 8192,
+  responseMimeType: "application/json",
 }
 
 export const courseOutline = model.startChat({
-    generationConfig,
-    history: [
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        { text: "Generate a study material for Python for Exam and level of difficulty will be Easy with summery of course, List of Chapters along with summery for each chapter, Topic list in each chapter in JSON format." }
+      ]
+    }, {
+      role: "model",
+      parts: [
         {
-            role: "user",
-            parts: [
-                { text: "Generate a study material for Python for Exam and level of difficulty will be Easy with summery of course, List of Chapters along with summery for each chapter, Topic list in each chapter in JSON format." }
-            ]
-        }, {
-            role: "model",
-            parts: [
-                {
-                    text: `{
+          text: `{
             "courseTitle": "Python Basics for Beginners (Easy Level)",
             "courseSummary": "This study material is designed for absolute beginners looking to grasp the fundamental concepts of Python programming. It covers essential syntax, data types, control flow, functions, and basic data structures, preparing you for entry-level Python exams.",
             "chapters": [
@@ -136,8 +136,113 @@ export const courseOutline = model.startChat({
               }
             ]
           }`
-                }
-            ]
         }
-    ],
+      ]
+    }
+  ],
+})
+
+export const generateNotesAiModel = model.startChat({
+  generationConfig,
+  history: [
+    // AI will take input like this 
+    {
+      role: 'user',
+      parts: [{
+        text:
+          `Generate exam material details content for each chapter, Make sure to includes all topic point in the content, make sure to give content in hTML format (Do not Add HTMLK,Head,Body,Title tag). The Chapters:`
+      }
+      ]
+    },
+    // this is defined to tell AI how we require result 
+    {
+      role: "model",
+      parts: [
+        {
+          text: "<h2>Chapter 1: Introduction to JavaScript</h2>\
+<h3>Exam Material Details</h3>\
+<h4>What is JavaScript?</h4>\
+<ul>\
+  <li>Definition and purpose of JavaScript</li>\
+  <li>History and evolution of JavaScript</li>\
+  <li>Key features and characteristics (e.g., scripting language, object-oriented, dynamic, weakly typed)</li>\
+  <li>Relationship with other web technologies (HTML, CSS)</li>\
+  <li>Use cases beyond web browsers (Node.js, mobile apps, desktop apps)</li>\
+</ul>\
+<h4>Client-side vs. Server-side JavaScript</h4>\
+<ul>\
+  <li><strong>Client-side JavaScript:</strong>\
+    <ul>\
+      <li>Execution environment (browser)</li>\
+      <li>Purpose (interactivity, DOM manipulation, form validation, AJAX)</li>\
+      <li>Examples of client-side operations</li>\
+    </ul>\
+  </li>\
+  <li><strong>Server-side JavaScript:</strong>\
+    <ul>\
+      <li>Execution environment (Node.js)</li>\
+      <li>Purpose (backend logic, API creation, database interaction)</li>\
+      <li>Examples of server-side operations</li>\
+    </ul>\
+  </li>\
+  <li>Key differences and similarities</li>\
+</ul>\
+<h4>How to include JavaScript in HTML (&lt;script&gt; tag)</h4>\
+<ul>\
+  <li><strong>Inline JavaScript:</strong>\
+    <ul>\
+      <li>Using onclick or other event attributes</li>\
+      <li>Advantages and disadvantages</li>\
+    </ul>\
+  </li>\
+  <li><strong>Internal JavaScript:</strong>\
+    <ul>\
+      <li>Placing &lt;script&gt; tags within the HTML document (&lt;head&gt; vs. &lt;body&gt;)</li>\
+      <li>Understanding render-blocking behavior</li>\
+      <li>Best practices for placement</li>\
+    </ul>\
+  </li>\
+  <li><strong>External JavaScript:</strong>\
+    <ul>\
+      <li>Linking to external .js files using the src attribute</li>\
+      <li>Advantages (caching, separation of concerns, reusability)</li>\
+      <li>Using async and defer attributes:\
+        <ul>\
+          <li>Purpose and impact on script loading and execution</li>\
+          <li>Differences between async and defer</li>\
+          <li>When to use each</li>\
+        </ul>\
+      </li>\
+    </ul>\
+  </li>\
+</ul>\
+<h4>Commenting in JavaScript</h4>\
+<ul>\
+  <li>Purpose of comments (documentation, explaining code, debugging)</li>\
+  <li><strong>Single-line comments:</strong>\
+    <ul>\
+      <li>Syntax (//)</li>\
+      <li>Examples of usage</li>\
+    </ul>\
+  </li>\
+  <li><strong>Multi-line comments:</strong>\
+    <ul>\
+      <li>Syntax (/* ... */)</li>\
+      <li>Examples of usage (e.g., block comments, JSDoc style)</li>\
+    </ul>\
+  </li>\
+  <li>Best practices for commenting</li>\
+</ul>\
+<h4>The Console (console.log())</h4>\
+<ul>\
+  <li>Introduction to the browser's developer console</li>\
+  <li>Purpose of console.log() for debugging and outputting information</li>\
+  <li>Basic usage and syntax of console.log()</li>\
+  <li>Other console methods (e.g., console.warn(), console.error(), console.info(), console.table(), console.dir()) — awareness of their existence and general purpose</li>\
+  <li>Accessing the console in different browsers</li>\
+</ul>"
+        }
+      ]
+    }
+  ]
 })
