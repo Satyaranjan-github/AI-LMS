@@ -5,6 +5,7 @@ import axios from "axios"
 import { Loader } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { toast } from "sonner"
 import { v4 as uuidv4 } from "uuid"
 import { Button } from "../../components/ui/button"
 import SelectOptions from "./_components/SelectOptions"
@@ -39,6 +40,8 @@ function Create() {
         })
         setLoading(false)
         router.replace("/dashboard")
+        // Toast Notification
+        toast("Your Course Content is generating, Click on Refresh Button")
         console.log("Result from create page=>", result.data.result.resp)
     }
 
