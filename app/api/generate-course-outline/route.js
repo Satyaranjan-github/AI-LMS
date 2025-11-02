@@ -6,7 +6,7 @@ import { inngest } from "../../../inngest/client"
 
 export async function POST(req) {
     const { courseId, topic, difficultyLevel, courseType, createdBy } = await req.json()
-    const PROMPT = `Generate a study material for ${topic} for ${courseType} and level of difficulty will be ${difficultyLevel} with summery of course, List of Chapters along with summery for each chapter, Topic list in each chapter in JSON format.`
+    const PROMPT = `Generate a study material for ${topic} for ${courseType} and level of difficulty will be ${difficultyLevel} with summery of course, List of Chapters along with summery and emoji icon for each chapter, for each chapter, Topic list in each chapter in JSON format.`
 
     //  Generate Course Layout using AI
     const aiResponse = await courseOutline.sendMessage(PROMPT)

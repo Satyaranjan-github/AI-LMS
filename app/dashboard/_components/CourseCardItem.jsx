@@ -1,5 +1,6 @@
 import { RefreshCcw } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "../../../components/ui/button"
 import { Progress } from "../../../components/ui/progress"
 
@@ -23,9 +24,11 @@ const CourseCardItem = ({ course }) => {
                         <RefreshCcw className="size-4 animate-spin" />
                         Generating...
                     </h2> :
-                        <Button>
-                            View
-                        </Button>
+                        <Link href={`/course/${course.courseId}`}>
+                            <Button>
+                                View
+                            </Button>
+                        </Link>
                     }
                 </div>
             </div>
