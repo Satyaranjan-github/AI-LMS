@@ -30,7 +30,5 @@ export async function POST(req) {
         }
     })
 
-    console.log("Result from inngest(generate chapter notes):-", result)
-
     return NextResponse.json({ result: dbResult[0] })
 }
