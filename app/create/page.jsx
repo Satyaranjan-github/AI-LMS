@@ -26,7 +26,6 @@ function Create() {
             [fieldName]: fieldValue
         })
         )
-        console.log(formData)
     }
 
     //Used to save user input and generate AI course layout using ai

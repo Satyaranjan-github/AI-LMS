@@ -3,7 +3,6 @@ import Image from "next/image"
 import { Progress } from "../../../../components/ui/progress"
 
 const CourseIntroCard = ({ course }) => {
-    console.log(course)
     return (
         <div className="flex gap-5 items-center p-10 border shadow-md rounded-lg">
             <Image

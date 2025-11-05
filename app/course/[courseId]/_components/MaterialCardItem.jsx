@@ -1,11 +1,21 @@
-import Image from "next/image"
-import { Button } from "../../../../components/ui/button"
+import Image from "next/image";
+import { Button } from "../../../../components/ui/button";
 
-const MaterialCardItem = ({ material }) => {
+const MaterialCardItem = ({ material, studyTypeContent }) => {
+    console.log("material.type =>", material.type);
+    console.log("studyTypeContent[material.type] =>", studyTypeContent?.[material.type]);
 
     return (
-        <div className="border shadow-md rounded-lg p-5 flex flex-col items-center">
-            <h2 className="p-1 px-2 bg-green-500 text-white rounded-full text-[10px] mb-2">Ready</h2>
+        <div className={`border shadow-md rounded-lg p-5 flex flex-col items-center ${studyTypeContent?.[material.type] === null ? "grayscale" : ""
+            }`}>
+            {studyTypeContent?.[material.type] === null ?
+                (
+                    <h2 className="p-1 px-2 bg-gray-500 text-white rounded-full text-[10px] mb-2">Generate</h2>
+                ) :
+                (
+                    <h2 className="p-1 px-2 bg-green-500 text-white rounded-full text-[10px] mb-2">Ready</h2>
+                )
+            }
             <Image
                 src={material.icon}
                 alt={material.name}
@@ -14,10 +24,17 @@ const MaterialCardItem = ({ material }) => {
             />
             <h2 className="font-medium mt-3">{material.name}</h2>
             <p className="text-gray-500 text-sm text-center">{material.description}</p>
-            <Button className="mt-3 w-full" variant="outline">
-                View Only
-            </Button>
-        </div>
+            {
+                studyTypeContent?.[material.type] === null ?
+                    <Button className="mt-3 w-full" variant="outline">
+                        Generate
+                    </Button>
+                    :
+                    <Button className="mt-3 w-full" variant="outline">
+                        View Only
+                    </Button>
+            }
+        </div >
     )
 }
 
