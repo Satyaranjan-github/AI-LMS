@@ -25,5 +25,9 @@ export async function POST(req) {
         const notes = await db.select().from(CHAPTER_NOTES_TABLE).where(eq(CHAPTER_NOTES_TABLE?.courseId, courseId))
 
         return NextResponse.json(notes)
+    } else {
+        const result = await db.select().from(STUDY_TYPE_CONTENT_TABLE).where(eq(STUDY_TYPE_CONTENT_TABLE?.courseId, courseId)).where(eq(STUDY_TYPE_CONTENT_TABLE?.type, studyType))
+
+        return NextResponse.json(result[0])
     }
 }

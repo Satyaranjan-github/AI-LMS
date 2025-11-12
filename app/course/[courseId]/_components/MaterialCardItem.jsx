@@ -28,7 +28,6 @@ const MaterialCardItem = ({ material, studyTypeContent, course, refreshData }) =
         refreshData(true)
         toast("Your Content is Ready to view")
     }
-    console.log("Course Id=", course?.courseId)
     return (
         <Link href={'/course/' + course?.courseId + material.path}>
             <div className={`border shadow-md rounded-lg p-5 flex flex-col items-center ${studyTypeContent?.[material.type] === null ? "grayscale" : ""
