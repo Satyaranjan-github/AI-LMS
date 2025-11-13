@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
-import { generateNotesAiModel } from "../configs/AiModel";
+import { generateNotesAiModel, GenerateStudyTypeContentAiModel } from "../configs/AiModel";
 import { db } from "../configs/db";
-import { CHAPTER_NOTES_TABLE, STUDY_MATERIAL_TABLE, USER_TABLE } from "../configs/schema";
+import { CHAPTER_NOTES_TABLE, STUDY_MATERIAL_TABLE, STUDY_TYPE_CONTENT_TABLE, USER_TABLE } from "../configs/schema";
 import { inngest } from "./client";
 
 
@@ -78,6 +78,31 @@ export const GenerateNotes = inngest.createFunction(
 
                 return "Success";
             }
+        )
+    }
+)
+
+// Used to generate different study type content like flashcards, quizzes etc.
+export const GenerateStudyTypeContent = inngest.createFunction(
+    { id: "Generate Study Type Content" },
+    { event: "studyType.generate" },
+    async ({ event, step }) => {
+        const { prompt, studyType, courseId, recordId } = event.data
+
+        // Generate content based on study type
+        const FlashCardAiResult = await step.run("Generating Flash Card Using AI", async () => {
+            const result = await GenerateStudyTypeContentAiModel.sendMessage(prompt)
+
+            const AIResult = JSON.parse(result.response.text());
+            return AIResult;
+        })
+        const DbResult = await step.run("Save Result in DB", async () => {
+            const result = await db.update(STUDY_TYPE_CONTENT_TABLE).set({
+                content: FlashCardAiResult,
+                status: "Ready"
+            }).where(eq(STUDY_TYPE_CONTENT_TABLE.id, recordId))
+            return "Data Inserted Successfully";
+        }
         )
     }
 )
