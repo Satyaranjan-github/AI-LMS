@@ -246,3 +246,23 @@ export const generateNotesAiModel = model.startChat({
     }
   ]
 })
+
+export const GenerateStudyTypeContentAiModel = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        { text: "Generate the flashcard on topic: JavaScript Basics,User Interface(UI), Development, Basic Web Navigation in JSON format with front back content,Maximum 15" }
+      ]
+    },
+    {
+      role: "model",
+      parts: [
+        {
+          "text": "[\n  {\n    \"front\": \"What is JavaScript?\",\n    \"back\": \"JavaScript is a versatile programming language primarily used for creating interactive effects within web browsers.\"\n  },\n  {\n    \"front\": \"Name two key features of JavaScript.\",\n    \"back\": \"DOM manipulation and event-driven programming.\"\n  },\n  {\n    \"front\": \"What is the purpose of the <script> tag in HTML?\",\n    \"back\": \"It’s used to embed or reference JavaScript code within an HTML document.\"\n  }\n]"
+        }
+      ]
+    }
+  ]
+})

@@ -1,8 +1,7 @@
 "use client"
 
 import axios from "axios"
-import { useParams } from "next/navigation"
-import { useRouter } from "next/router"
+import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Button } from "../../../../components/ui/button"
 
@@ -11,6 +10,7 @@ function ViewNotes() {
     const [notes, setNotes] = useState()
     const [stepCount, setStepCount] = useState(0)
     const router = useRouter()
+
     const GetNotes = async () => {
         const result = await axios.post('/api/study-type', {
             courseId: courseId,

@@ -41,11 +41,8 @@ function Create() {
         router.replace("/dashboard")
         // Toast Notification
         toast("Your Course Content is generating, Click on Refresh Button")
-        console.log("Result from create page=>", result.data.result.resp)
     }
 
-
-    
     return (
         <div className="flex flex-col items-center p-5 md:px-24 lg:px-36 mt-20">
             <h2 className="font-bold text-4xl text-primary">Start Building Your Personal Study Material</h2>
