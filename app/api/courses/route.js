@@ -6,6 +6,7 @@ import { STUDY_MATERIAL_TABLE } from "../../../configs/schema";
 export async function POST(req) {
 
     const { createdBy } = await req.json()
+
     const result = await db.select().from(STUDY_MATERIAL_TABLE).where(eq(STUDY_MATERIAL_TABLE.createdBy, createdBy))
         .orderBy(desc(STUDY_MATERIAL_TABLE.id))
 

@@ -266,3 +266,22 @@ export const GenerateStudyTypeContentAiModel = model.startChat({
     }
   ]
 })
+
+export const GenerateQuizAiModel = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        { text: "Generate Quiz on topic:JavaScript Basics,User Interface(UI), Development, Basic Web Navigation in JSON format with front back content,Maximum 15" }
+      ]
+    }, {
+      role: "model",
+      parts: [
+        {
+          text: "```json\n{\n  \"quizTitle\": \"JavaScript Basics, UI Development & Web Navigation Quiz\",\n  \"totalQuestions\": 15,\n  \"questions\": [\n    { \"front\": \"What does JavaScript primarily run on?\", \"back\": \"JavaScript runs in the browser or on Node.js.\" },\n    { \"front\": \"What keyword creates block-scoped variables?\", \"back\": \"The 'let' keyword.\" },\n    { \"front\": \"How do you select an element by ID in JavaScript?\", \"back\": \"Using document.getElementById().\" },\n    { \"front\": \"What does UI stand for?\", \"back\": \"User Interface.\" },\n    { \"front\": \"What is a key principle of UI design?\", \"back\": \"Consistency.\" },\n    { \"front\": \"What is the DOM?\", \"back\": \"Document Object Model, representing the webpage structure.\" },\n    { \"front\": \"Which function logs messages to the console?\", \"back\": \"console.log().\" },\n    { \"front\": \"How to change text of an element in JS?\", \"back\": \"Using innerText or textContent.\" },\n    { \"front\": \"What does CSS stand for?\", \"back\": \"Cascading Style Sheets.\" },\n    { \"front\": \"Give an example of a UI component.\", \"back\": \"Buttons, navbars, modals, etc.\" },\n    { \"front\": \"What is event handling?\", \"back\": \"Responding to user actions like clicks.\" },\n    { \"front\": \"What is a navbar used for?\", \"back\": \"Website navigation.\" },\n    { \"front\": \"How to redirect to another page in JS?\", \"back\": \"window.location.href = 'url'.\" },\n    { \"front\": \"What is the purpose of <a> tag?\", \"back\": \"Creating hyperlinks.\" },\n    { \"front\": \"What is responsive UI?\", \"back\": \"UI that adapts to different screen sizes.\" }\n  ]\n}\n```"
+        }
+      ]
+    }
+  ]
+})
