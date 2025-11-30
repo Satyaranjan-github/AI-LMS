@@ -28,11 +28,17 @@ const MaterialCardItem = ({ material, studyTypeContent, course, refreshData }) =
         refreshData(true)
         toast("Your Content is Ready to view")
     }
+    const value = studyTypeContent?.[material.type];
+
+    const isEmpty =
+        !value || // undefined or null
+        (Array.isArray(value) && value.length === 0);
+
     return (
         <Link href={'/course/' + course?.courseId + material.path}>
-            <div className={`border shadow-md rounded-lg p-5 flex flex-col items-center ${studyTypeContent?.[material.type] === null ? "grayscale" : ""
+            <div className={`border shadow-md rounded-lg p-5 flex flex-col items-center ${isEmpty ? "grayscale" : ""
                 }`}>
-                {studyTypeContent?.[material.type] === null ?
+                {isEmpty ?
                     (
                         <h2 className="p-1 px-2 bg-gray-500 text-white rounded-full text-[10px] mb-2">Generate</h2>
                     ) :
@@ -49,15 +55,16 @@ const MaterialCardItem = ({ material, studyTypeContent, course, refreshData }) =
                 <h2 className="font-medium mt-3">{material.name}</h2>
                 <p className="text-gray-500 text-sm text-center">{material.description}</p>
                 {
-                    studyTypeContent?.[material.type] === null ?
-                        <Button className="mt-3 w-full" variant="outline" onClick={() => GenerateContent()}>
+                    isEmpty ? (
+                        <Button className="mt-3 w-full" variant="outline" onClick={GenerateContent}>
                             {loading && <RefreshCcw className="animate-spin" />}
                             Generate
                         </Button>
-                        :
+                    ) : (
                         <Button className="mt-3 w-full" variant="outline">
                             View Only
                         </Button>
+                    )
                 }
             </div >
         </Link>

@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "app/dashboard/layout.jsx"  ],
+, "app/dashboard/layout.jsx", "app/course/[courseId]/quiz/_components/QuizCardItem.jsx"  ],
   "exclude": [
     "node_modules"
   ]
