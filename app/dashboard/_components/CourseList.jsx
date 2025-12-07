@@ -3,20 +3,23 @@
 import { useUser } from "@clerk/nextjs"
 import axios from "axios"
 import { RefreshCcw } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button } from "../../../components/ui/button"
+import { CourseCountContext } from "../../_context/CourseCountContext"
 import CourseCardItem from "./CourseCardItem"
 
 function CourseList() {
     const { user } = useUser()
     const [courseList, setCourseList] = useState([])
     const [loading, setLoading] = useState(false)
+    const { totalCourse, setTotalCourse } = useContext(CourseCountContext)
 
     const GetCourseList = async () => {
         setLoading(true)
         const result = await axios.post("/api/courses", { createdBy: user?.primaryEmailAddress?.emailAddress })
         setCourseList(result.data.result)
         setLoading(false)
+        setTotalCourse(result.data.result?.length)
     }
 
     useEffect(() => {
