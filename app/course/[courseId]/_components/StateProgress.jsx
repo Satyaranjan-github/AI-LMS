@@ -2,15 +2,32 @@ import { Button } from "../../../../components/ui/button"
 
 function StateProgress({ stepCount, setStepCount, data }) {
     return (
-        <div className="flex gap-5 items-center">
-            {stepCount !== 0 && <Button
-                variant="outline" onClick={() => setStepCount(stepCount - 1)}>Previous</Button>}
-            {data?.map((item, index) => (
-                <div key={index} className={`w-full h-2 rounded-full ${index < stepCount ? "bg-primary" : "bg-gray-200"}`} >
-                </div>
-            ))}
-            <Button variant="outline" onClick={() => setStepCount(stepCount + 1)}>Next</Button>
-        </div >
+        <div className="flex gap-2 sm:gap-4 items-center w-full my-4">
+            {stepCount !== 0 ? (
+                <Button variant="outline" size="sm" onClick={() => setStepCount(stepCount - 1)} className="text-xs">
+                    Prev
+                </Button>
+            ) : (
+                <div className="w-[50px]" />
+            )}
+
+            <div className="flex gap-1.5 flex-1 items-center">
+                {data?.map((item, index) => (
+                    <div
+                        key={index}
+                        className={`h-2 flex-1 rounded-full transition-all ${
+                            index <= stepCount ? "bg-primary" : "bg-slate-200"
+                        }`}
+                    />
+                ))}
+            </div>
+
+            {stepCount < (data?.length - 1 || 0) && (
+                <Button variant="outline" size="sm" onClick={() => setStepCount(stepCount + 1)} className="text-xs">
+                    Next
+                </Button>
+            )}
+        </div>
     )
 }
 

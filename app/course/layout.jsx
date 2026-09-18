@@ -2,9 +2,9 @@ import DashboardHeader from "../dashboard/_components/DashboardHeader"
 
 function CourseViewLayout({ children }) {
     return (
-        <div>
+        <div className="min-h-screen bg-slate-50/50 flex flex-col">
             <DashboardHeader />
-            <div className="mx-10 md:mx-36 lg:mx-60 mt-10">
+            <div className="w-full flex-1">
                 {children}
             </div>
         </div>

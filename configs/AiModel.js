@@ -1,7 +1,7 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai')
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
-const genAI = new GoogleGenerativeAI(apiKey)
+const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
   model: "gemini-2.5-flash"
@@ -13,6 +13,13 @@ const generationConfig = {
   topK: 40,
   maxOutputTokens: 8192,
   responseMimeType: "application/json",
+}
+
+const htmlGenerationConfig = {
+  temperature: 1,
+  topP: 0.95,
+  topK: 40,
+  maxOutputTokens: 8192,
 }
 
 export const courseOutline = model.startChat({
@@ -143,7 +150,7 @@ export const courseOutline = model.startChat({
 })
 
 export const generateNotesAiModel = model.startChat({
-  generationConfig,
+  generationConfig: htmlGenerationConfig,
   history: [
     // AI will take input like this 
     {
@@ -273,15 +280,35 @@ export const GenerateQuizAiModel = model.startChat({
     {
       role: "user",
       parts: [
-        { text: "Generate Quiz on topic:JavaScript Basics,User Interface(UI), Development, Basic Web Navigation in JSON format with front back content,Maximum 15" }
+        { text: "Generate Quiz on topic: JavaScript Basics, User Interface(UI), Development in JSON format with Questions, 4 Options, correct answer and explanation (Max 10)" }
       ]
-    }, {
+    },
+    {
       role: "model",
       parts: [
         {
-          text: "```json\n{\n  \"quizTitle\": \"JavaScript Basics, UI Development & Web Navigation Quiz\",\n  \"totalQuestions\": 15,\n  \"questions\": [\n    { \"front\": \"What does JavaScript primarily run on?\", \"back\": \"JavaScript runs in the browser or on Node.js.\" },\n    { \"front\": \"What keyword creates block-scoped variables?\", \"back\": \"The 'let' keyword.\" },\n    { \"front\": \"How do you select an element by ID in JavaScript?\", \"back\": \"Using document.getElementById().\" },\n    { \"front\": \"What does UI stand for?\", \"back\": \"User Interface.\" },\n    { \"front\": \"What is a key principle of UI design?\", \"back\": \"Consistency.\" },\n    { \"front\": \"What is the DOM?\", \"back\": \"Document Object Model, representing the webpage structure.\" },\n    { \"front\": \"Which function logs messages to the console?\", \"back\": \"console.log().\" },\n    { \"front\": \"How to change text of an element in JS?\", \"back\": \"Using innerText or textContent.\" },\n    { \"front\": \"What does CSS stand for?\", \"back\": \"Cascading Style Sheets.\" },\n    { \"front\": \"Give an example of a UI component.\", \"back\": \"Buttons, navbars, modals, etc.\" },\n    { \"front\": \"What is event handling?\", \"back\": \"Responding to user actions like clicks.\" },\n    { \"front\": \"What is a navbar used for?\", \"back\": \"Website navigation.\" },\n    { \"front\": \"How to redirect to another page in JS?\", \"back\": \"window.location.href = 'url'.\" },\n    { \"front\": \"What is the purpose of <a> tag?\", \"back\": \"Creating hyperlinks.\" },\n    { \"front\": \"What is responsive UI?\", \"back\": \"UI that adapts to different screen sizes.\" }\n  ]\n}\n```"
+          text: `\`\`\`json
+{
+  "quizTitle": "JavaScript Basics & UI Development Quiz",
+  "totalQuestions": 2,
+  "questions": [
+    {
+      "question": "What does JavaScript primarily run on in a web browser?",
+      "options": ["Browser JS Engine", "SQL Database", "CSS Compiler", "Operating System Kernel"],
+      "correctAnswer": "Browser JS Engine",
+      "explanation": "JavaScript runs directly inside web browser JS engines like V8 or SpiderMonkey."
+    },
+    {
+      "question": "Which keyword creates a block-scoped variable in modern JavaScript?",
+      "options": ["var", "let", "global", "define"],
+      "correctAnswer": "let",
+      "explanation": "The 'let' and 'const' keywords provide block scoping introduced in ES6."
+    }
+  ]
+}
+\`\`\``
         }
       ]
     }
-  ]
+  ],
 })
