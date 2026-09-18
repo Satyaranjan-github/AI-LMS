@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { useState } from "react"
-
+import { CheckCircle2 } from "lucide-react"
 
 function SelectOptions({ selectCourseType }) {
     const Options = [
@@ -28,27 +28,57 @@ function SelectOptions({ selectCourseType }) {
         }
     ]
 
-    const [selectedOptions, setSelectedOptions] = useState()
+    const [selectedOption, setSelectedOption] = useState()
+
     return (
-        <div>
-            <h2 className="text-center mb-2 text-lg">
-                For which you want to create your personal study material ?
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-                {Options.map((option, index) => (
-                    <div key={index} className={`p-4 mt-5 flex flex-col items-center justify-center border rounded-xl hover:border-primary cursor-pointer ${selectedOptions === option.name ? "border-primary" : ""}`}
-                        onClick={() => {
-                            setSelectedOptions(option.name)
-                            selectCourseType(option.name)
-                            selectCourseType(option.name)
-                        }}
-                    >
-                        <Image alt={option.name} src={option.icon} width={50} height={50} />
-                        <h2 className="text-sm mt-2">{option.name}</h2>
-                    </div>
-                ))}
+        <div className="w-full space-y-5">
+            <h3 className="text-center text-sm sm:text-base font-semibold text-slate-700">
+                What do you want to create personal study material for?
+            </h3>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+                {Options.map((option, index) => {
+                    const isSelected = selectedOption === option.name
+
+                    return (
+                        <div
+                            key={index}
+                            onClick={() => {
+                                setSelectedOption(option.name)
+                                selectCourseType(option.name)
+                            }}
+                            className={`group relative p-4 rounded-xl border transition-all duration-200 cursor-pointer flex flex-col items-center justify-center text-center space-y-2 bg-white ${
+                                isSelected
+                                    ? "border-2 border-primary bg-primary/5 shadow-xs font-semibold"
+                                    : "border-slate-200 hover:border-primary hover:shadow-xs hover:-translate-y-0.5"
+                            }`}
+                        >
+                            {isSelected && (
+                                <div className="absolute top-2.5 right-2.5 text-primary">
+                                    <CheckCircle2 className="size-4 text-primary" />
+                                </div>
+                            )}
+
+                            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 group-hover:scale-105 transition-transform">
+                                <Image
+                                    alt={option.name}
+                                    src={option.icon}
+                                    width={44}
+                                    height={44}
+                                    className="w-10 h-10 object-contain"
+                                />
+                            </div>
+
+                            <h4 className={`text-xs sm:text-sm font-medium transition-colors ${
+                                isSelected ? "text-primary font-semibold" : "text-slate-800 group-hover:text-primary"
+                            }`}>
+                                {option.name}
+                            </h4>
+                        </div>
+                    )
+                })}
             </div>
-        </div >
+        </div>
     )
 }
 

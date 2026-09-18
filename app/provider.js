@@ -29,7 +29,13 @@ function Provider({ children }) {
         //     console.log("User Response=>", userResponse)
         // }
         const resp = await axios.post("/api/create-user", {
-            user: user
+            user: {
+                fullName: user?.fullName,
+                primaryEmailAddress: {
+                    emailAddress: user?.primaryEmailAddress?.emailAddress
+                },
+                emailAddresses: user?.emailAddresses?.map(e => ({ emailAddress: e.emailAddress }))
+            }
         })
     }
 
